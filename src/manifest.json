@@ -1,0 +1,16 @@
+{
+   "background_page": "background.html",
+   "browser_action": {
+      "default_icon": "images/livereload-off-19.png",
+      "default_title": "on/off live reload"
+   },
+   "description": "live reload page resources (html,css,js)",
+   "icons": {
+      "128": "images/livereload-128.png",
+      "16": "images/livereload-16.png",
+      "48": "images/livereload-48.png"
+   },
+   "name": "live reload",
+   "permissions": [ "tabs", "\u003Call_urls\u003E" ],
+   "version": "0.1.1"
+}
