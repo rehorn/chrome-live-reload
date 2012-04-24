@@ -1,0 +1,113 @@
+
+body {
+    font: 14px/1.5 '微软雅黑';
+    color: #53637D;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.container {
+    width: 60%;
+    margin: auto;
+    position: relative;
+    top: 40px;
+    margin: 0 auto;
+    min-width: 720px;
+    overflow: hidden;
+}
+
+h1 {
+    -webkit-user-select: none;
+    margin: 0;
+    padding: 8px 0;
+    font-size: 200%;
+    font-weight: normal;
+    text-indent: 40px;
+    text-shadow: white 0 1px 2px;
+    -webkit-background-size: 28px 28px;
+    border-bottom: 1px solid #EEE;
+}
+
+h3 {
+    font-size: 105%;
+    font-weight: bold;
+    margin: 0 0 10px;
+    color: #53637D;
+    vertical-align: middle;
+}
+
+section {
+    padding: 8px 40px;
+    -webkit-box-orient: horizontal;
+    border-bottom: 1px solid #EEE;
+    margin-top: 17px;
+    padding-bottom: 20px;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0 0 5px 10px;
+}
+
+ul li{
+    list-style: none;
+    padding: 0 0 5px 0;
+    margin: 0;
+    line-height: 20px;
+}
+
+.defaultUl li {
+    float: left;
+    margin-right: 20px;
+}
+
+button {
+    -webkit-border-radius: 2px;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-user-select: none;
+    background: -webkit-linear-gradient(
+        #FAFAFA, 
+        #F4F4F4 40%, 
+        #E5E5E5
+        );
+    border: 1px solid #AAA;
+    color: #444;
+    font-size: inherit;
+    margin-bottom: 0px;
+    min-width: 4em;
+    padding: 3px 12px 3px 12px;
+}
+
+button:hover {
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    background: #EBEBEB -webkit-linear-gradient(
+        #FEFEFE, 
+        #F8F8F8 40%, 
+        #E9E9E9);
+    border-color: #999;
+    color: #222;
+}
+
+.urlListSection{
+    position: relative;
+}
+
+.ctrlPanel{
+    right:0px;
+    top:5px;
+    position: absolute;
+}
+
+a,a:hover{
+    text-decoration:none;
+    color: #53637D;
+}
+
+

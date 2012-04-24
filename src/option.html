@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Reload 配置页面</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+</head>
+<body>
+    <div class="container">
+        <h1>Live Reload配置</h1>
+        <section>
+            <h3>启用Live Reload的资源类型</h3>
+            <ul class="defaultUl clearfix">
+                <li><label><input id="monitor_css" name="monitor_css" type="checkbox" value="true">CSS</label></li>
+                <li><label><input id="monitor_js" name="monitor_js" type="checkbox" value="true">JavaScript</label></li>
+                <li><label><input id="monitor_html" name="monitor_html" type="checkbox" value="true">HTML</label></li>
+            </ul>
+        </section>
+        <section>
+            <h3>高级设置</h3>
+            <ul class="defaultUl clearfix">
+                <li><label><input id="monitor_html" name="monitor_html" type="checkbox" value="true">显示元素Id</label></li>
+                <li><label><input id="monitor_html" name="monitor_html" type="checkbox" value="true">显示元素Class</label></li>
+                <li><label><input id="monitor_css" name="monitor_css" type="checkbox" value="true">只对本站点资源</label></li>
+                <li><label><input id="monitor_js" name="monitor_js" type="checkbox" value="true">Css改变动画</label></li>
+            </ul>
+        </section>
+        <section class="urlListSection">
+            <h3>启用Live Reload的页面</h3>
+            <div class="ctrlPanel"><button>删除</button><button>清空</button></div>
+            <div id="urlList">
+                <ul>
+                    <li><input id="monitor_html" name="monitor_html" type="checkbox" value="true"><a href ="###">dddd</a></li>
+                </ul>
+            </div>
+        </section>
+        
+    </div>
+</body>
+</html>
