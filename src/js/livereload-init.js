@@ -6,6 +6,7 @@
 
 (function(window, undefined){
 
+    var LiveReloadSetting = window.LiveReloadSetting;
     var LiveReloadWatcher = window.LiveReloadWatcher;
 
     var LiveReload = {
@@ -15,6 +16,7 @@
         _res:{
             iconOn: 'images/livereload-19.png',
             iconOff: 'images/livereload-off-19.png',
+            settingScript: 'js/livereload-setting.js',
             injectScript: 'js/livereload-inject.js'
         },
 
@@ -29,25 +31,35 @@
             var self = this;
 
             var observer = {
+                enableLiveReload: function(tab){
+                    chrome.tabs.executeScript(tab.id, {
+                        "file": self._res.settingScript
+                    });
+                    chrome.tabs.executeScript(tab.id, {
+                        "file": self._res.injectScript
+                    });
+                    chrome.browserAction.setIcon({
+                        tabId: tab.id,
+                        path: self._res.iconOn
+                    });
+                    self._tabStatus[tab.id] = true;
+                    LiveReloadSetting.addLiveList(tab.url);
+                    console.log('enable reload tab ' + tab.id);
+                },
+                disableLiveReload: function(tab){
+                    LiveReloadWatcher.remove(tab.id);
+                    chrome.browserAction.setIcon({
+                        tabId: tab.id,
+                        path: self._res.iconOff
+                    });
+                    self._tabStatus[tab.id] = false;
+                    console.log('disable reload tab ' + tab.id);
+                },
                 onBrowserActionClicked: function(tab){
                     if(!self._tabStatus[tab.id]){
-                        chrome.tabs.executeScript(tab.id, {
-                            "file": self._res.injectScript
-                        });
-                        chrome.browserAction.setIcon({
-                            tabId: tab.id,
-                            path: self._res.iconOn
-                        });
-                        self._tabStatus[tab.id] = true;
-                        console.log('start watch tab ' + tab.id);
+                        observer.enableLiveReload(tab);
                     }else{
-                        LiveReloadWatcher.remove(tab.id);
-                        chrome.browserAction.setIcon({
-                            tabId: tab.id,
-                            path: self._res.iconOff
-                        });
-                        self._tabStatus[tab.id] = false;
-                        console.log('stop watch tab ' + tab.id);
+                        observer.disableLiveReload(tab);
                     }
                 },
                 onExtRequest: function(request, sender, sendResponse){
@@ -60,15 +72,14 @@
                         sendResponse('livereload initWatchList ok');
                     }
                 },
-                onTabUpdated: function(tabId, changeInfo){
-                    if(self._tabStatus[tabId] === true && changeInfo.status === 'complete'){
-                        chrome.tabs.executeScript(tabId, {
-                            "file": self._res.injectScript
-                        });
-                        chrome.browserAction.setIcon({
-                            tabId: tabId,
-                            path: self._res.iconOn
-                        });
+                onTabUpdated: function(tabId, changeInfo, tab){
+                    // if(changeInfo.status === 'loading' || changeInfo.status === 'complete'){
+                    if(changeInfo.status === 'complete'){
+                        if(LiveReloadSetting.isUrlLive(tab.url)){
+                            observer.enableLiveReload(tab);
+                        }else{
+                            observer.disableLiveReload(tab);
+                        }
                     }
                 },
                 onTabRemoved: function(tabId){

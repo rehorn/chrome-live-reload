@@ -6,6 +6,19 @@
 
 (function(window, undefined){
 
+    var Utils = {
+        remove: function (source, match) {
+            var len = source.length;
+                
+            while (len--) {
+                if (len in source && source[len] === match) {
+                    source.splice(len, 1);
+                }
+            }
+            return source;
+        }
+    };
+
     var LiveReloadSetting = {
         _option:{
             lr_enable_css: true,
@@ -39,25 +52,31 @@
             }
         },
         addLiveList: function(url){
-            var list = this._option['lr_live_list'];
-            list.push(url);
-            this.set('lr_live_list', list);
+            var list = this.get('lr_live_list');
+            if(!this.isUrlLive(url)){
+                list.push(url);
+                this.set('lr_live_list', list);
+                this._option['lr_live_list'] = list;
+            }
         },
         removeLiveList: function(url){
-            var list = this._option['lr_live_list'];
+            var list = this.get('lr_live_list');
             if(this.isUrlLive(url)){
-                list.remove(url);
+                Utils.remove(list, url);
                 this.set('lr_live_list', list);
+                this._option['lr_live_list'] = list;
             }
         },
         isUrlLive: function(url){
-            return this._option['lr_live_list'].indexOf(url) > 0;
+            return this.get('lr_live_list').indexOf(url) >= 0;
         },
         getOption: function(){
             this.update();
             return this._option;
         }
     };
+
+    LiveReloadSetting.init();
 
     window.LiveReloadSetting = LiveReloadSetting;
 

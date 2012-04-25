@@ -7,8 +7,7 @@
 (function(window, undefined) {
 
     var LiveReloadSetting = window.LiveReloadSetting;
-    LiveReloadSetting.init();
-    console.log(LiveReloadSetting.getOption());
+    console.log(LiveReloadSetting);
 
     var el = {};
     el.clearAll = document.querySelector('#clearAll');
@@ -20,6 +19,7 @@
             this.initEvents();
         },
         initEvents: function() {
+            var self = this;
             var observer = {
                 onClearAll: function(e) {
                     console.log('clearAll');
@@ -40,6 +40,7 @@
                     var elm = e.srcElement;
                     if(elm.className == 'deleteButton'){
                         LiveReloadSetting.removeLiveList(elm.getAttribute('url'));
+                        self.initUrlList();
                     }
                 }
             };
@@ -56,14 +57,18 @@
                 el.fields[i].addEventListener('change', observer.updateValue, false);
             }
 
+            this.initUrlList();
+            el.urlList.addEventListener('click', observer.onRemoveUrl, false);
+            el.clearAll.addEventListener('click', observer.onClearAll, false);
+        },
+        initUrlList: function(){
             var urls = LiveReloadSetting.get('lr_live_list');
             var html = '';
             for(var j = 0; j < urls.length; j++){
-                html += '<li><a href="'+urls+'" title="'+urls+'" target="_blank">'+urls+'</a><button class="deleteButton" url="'+urls+'">×</button></li>'
+                var url = urls[j];
+                html += '<li><a href="'+url+'" title="'+url+'" target="_blank">'+url+'</a><button class="deleteButton" url="'+url+'">×</button></li>'
             }
-            el.urlList.innerHTML = '';
-            el.urlList.addEventListener('click', observer.onRemoveUrl, false);
-            el.clearAll.addEventListener('click', observer.onClearAll, false);
+            el.urlList.innerHTML = html;
         }
     };
 

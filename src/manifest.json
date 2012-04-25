@@ -1,5 +1,6 @@
 {
    "background_page": "background.html",
+   "options_page": "options.html",
    "browser_action": {
       "default_icon": "images/livereload-off-19.png",
       "default_title": "on/off live reload"

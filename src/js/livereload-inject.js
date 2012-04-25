@@ -6,6 +6,8 @@
 
 (function(window, undefined) {
 
+    var LiveReloadSetting = window.LiveReloadSetting;
+
     var Utils = {
         toArr: function(arrLike){
             return Array.prototype.slice.call(arrLike);
@@ -40,7 +42,12 @@
             console.log('injectScript init');
             this.initWatchList();
             this.initEvents();
+            
+            if(LiveReloadSetting.get('lr_enable_scrolly')){
+                this._adjustScroll();
+            }
         },
+
         initWatchList: function() {
             var links = this._parseLinks();
             chrome.extension.sendRequest({
@@ -50,6 +57,7 @@
                 console.log(response);
             });
         },
+
         initEvents: function() {
             var self = this;
             var observer = {
@@ -62,32 +70,39 @@
 
             chrome.extension.onRequest.addListener(observer.onExtRequest);
         },
+
         _parseLinks: function(){
             var cssLinks = Utils.toArr(document.querySelectorAll('link[href*=".css"]')),
                 jsLinks = Utils.toArr(document.querySelectorAll('script[src*=".js"]')),
                 htmlLink = document.URL,
                 result = [];
 
-            cssLinks.forEach(function(item) {
-                var l = {
-                    type: 'css',
-                    url: Utils.getAbsUrl(item.getAttribute('href'))
-                };
-                result.push(l);
-            });
+            if(LiveReloadSetting.get('lr_enable_css')){
+                cssLinks.forEach(function(item) {
+                    var l = {
+                        type: 'css',
+                        url: Utils.getAbsUrl(item.getAttribute('href'))
+                    };
+                    result.push(l);
+                });    
+            }
+            
+            if(LiveReloadSetting.get('lr_enable_js')){
+                jsLinks.forEach(function(item) {
+                    var l = {
+                        type: 'js',
+                        url: Utils.getAbsUrl(item.getAttribute('src'))
+                    };
+                    result.push(l);
+                });
+            }
 
-            jsLinks.forEach(function(item) {
-                var l = {
-                    type: 'js',
-                    url: Utils.getAbsUrl(item.getAttribute('src'))
-                };
-                result.push(l);
-            });
-
-            result.push({
-                type: 'html',
-                url: htmlLink
-            });
+            if(LiveReloadSetting.get('lr_enable_html')){
+                result.push({
+                    type: 'html',
+                    url: htmlLink
+                });
+            }
 
             return result;
         },

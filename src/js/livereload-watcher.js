@@ -6,6 +6,8 @@
 
 (function(window, undefined) {
 
+    var LiveReloadSetting = window.LiveReloadSetting;
+
     var Utils = {
         uniqueArr: function (source, compareFn) {
             var len = source.length,
@@ -17,9 +19,6 @@
                     return item1 === item2;
                 };
             }
-            
-            // 从后往前双重循环比较
-            // 如果两个元素相同，删除后一个
             while (--len > 0) {
                 datum = result[len];
                 i = len;
@@ -30,7 +29,6 @@
                     }
                 }
             }
-
             return result;
         }
     };
@@ -39,12 +37,15 @@
         _watchTabList: {},
         _cache: {},
         _requestList: {},
+        
         init: function(){
             var self = this;
+            var rate = LiveReloadSetting.get('lr_refresh_rate') || 1000;
             setInterval(function(){
                 self._check();
-            },1000);
+            }, rate);
         },
+
         _check: function(){
             var list = this._getAllRequestList();
             var self = this;
@@ -58,6 +59,7 @@
                 });
             });
         },
+
         _getAllRequestList: function(){
             var self = this,
                 list = [];
@@ -72,6 +74,7 @@
             }
             return Utils.uniqueArr(list);
         },
+
         _requestContent: function(item, callback){
             var url = item.url;
             var xhr = new XMLHttpRequest();
@@ -83,6 +86,7 @@
             };
             xhr.send();
         },
+
         _fireCallback: function(item){
             for(var key in this._watchTabList){
                 if(this._watchTabList.hasOwnProperty(key)){
@@ -98,6 +102,7 @@
                 }
             }
         },
+
         add: function(tabId, list, callback){
             var self = this;
             this._watchTabList[tabId] = {
@@ -114,6 +119,7 @@
                 }
             });
         },
+
         remove: function(tabId){
             delete this._watchTabList[tabId];
         }
