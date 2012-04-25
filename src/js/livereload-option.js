@@ -35,6 +35,12 @@
                         LiveReloadSetting.set(elm.id, elm.value);
                     }
                     console.log(LiveReloadSetting.getOption());
+                },
+                onRemoveUrl: function(e){
+                    var elm = e.srcElement;
+                    if(elm.className == 'deleteButton'){
+                        LiveReloadSetting.removeLiveList(elm.getAttribute('url'));
+                    }
                 }
             };
 
@@ -50,6 +56,13 @@
                 el.fields[i].addEventListener('change', observer.updateValue, false);
             }
 
+            var urls = LiveReloadSetting.get('lr_live_list');
+            var html = '';
+            for(var j = 0; j < urls.length; j++){
+                html += '<li><a href="'+urls+'" title="'+urls+'" target="_blank">'+urls+'</a><button class="deleteButton" url="'+urls+'">×</button></li>'
+            }
+            el.urlList.innerHTML = '';
+            el.urlList.addEventListener('click', observer.onRemoveUrl, false);
             el.clearAll.addEventListener('click', observer.onClearAll, false);
         }
     };

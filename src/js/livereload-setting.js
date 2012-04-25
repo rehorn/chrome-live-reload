@@ -47,6 +47,7 @@
             var list = this._option['lr_live_list'];
             if(this.isUrlLive(url)){
                 list.remove(url);
+                this.set('lr_live_list', list);
             }
         },
         isUrlLive: function(url){
