@@ -14,15 +14,21 @@
             lr_skip_external: true,
             lr_css_transitions: true,
             lr_refresh_rate: 1000,
-            lr_enable_node_tag: true,
+            lr_enable_scrolly: true,
+            lr_enable_id_tag: true,
+            lr_enable_class_tag: true,
             lr_live_list: []
+        },
+        init: function(){
+            this.update();
         },
         set: function(key, value){
             this._option[key] = value;
             localStorage.setItem(key, JSON.stringify(value));
         },
         get: function(key){
-            return JSON.parse(localStorage.getItem(key)) || this._option[key];
+            var item = JSON.parse(localStorage.getItem(key));
+            return (item !== null) ? item : this._option[key];
         },
         remove: function(key){
             localStorage.removeItem(key);

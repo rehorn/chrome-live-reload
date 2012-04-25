@@ -11,30 +11,41 @@
         <section>
             <h3>启用Live Reload的资源类型</h3>
             <ul class="defaultUl clearfix">
-                <li><label><input id="monitor_css" name="monitor_css" type="checkbox" value="true">CSS</label></li>
-                <li><label><input id="monitor_js" name="monitor_js" type="checkbox" value="true">JavaScript</label></li>
-                <li><label><input id="monitor_html" name="monitor_html" type="checkbox" value="true">HTML</label></li>
+                <li><label><input id="lr_enable_css" name="lr_enable_css" type="checkbox" value="true">CSS</label></li>
+                <li><label><input id="lr_enable_js" name="lr_enable_js" type="checkbox" value="true">JavaScript</label></li>
+                <li><label><input id="lr_enable_html" name="lr_enable_html" type="checkbox" value="true">HTML</label></li>
             </ul>
         </section>
         <section>
             <h3>高级设置</h3>
             <ul class="defaultUl clearfix">
-                <li><label><input id="monitor_html" name="monitor_html" type="checkbox" value="true">显示元素Id</label></li>
-                <li><label><input id="monitor_html" name="monitor_html" type="checkbox" value="true">显示元素Class</label></li>
-                <li><label><input id="monitor_css" name="monitor_css" type="checkbox" value="true">只对本站点资源</label></li>
-                <li><label><input id="monitor_js" name="monitor_js" type="checkbox" value="true">Css改变动画</label></li>
+                <li><label><input id="lr_enable_scrolly" name="lr_enable_scrolly" type="checkbox" value="true">保持滚动条位置</label></li>
+                <li><label><input id="lr_enable_id_tag" name="lr_enable_id_tag" type="checkbox" value="true">显示元素Id</label></li>
+                <li><label><input id="lr_enable_class_tag" name="lr_enable_class_tag" type="checkbox" value="true">显示元素Class</label></li>
+                <li><label><input id="lr_skip_external" name="lr_skip_external" type="checkbox" value="true">只对本站点资源</label></li>
+                <li><label>
+                <select id="lr_refresh_rate" name="lr_refresh_rate">
+                    <option value="500">500ms</option>
+                    <option value="750">750ms</option>
+                    <option value="1000">1s</option>
+                    <option value="2000">2s</option>
+                    <option value="5000">5s</option>
+                </select>
+                刷新频率</label></li>
             </ul>
         </section>
         <section class="urlListSection">
             <h3>启用Live Reload的页面</h3>
-            <div class="ctrlPanel"><button>删除</button><button>清空</button></div>
-            <div id="urlList">
-                <ul>
-                    <li><input id="monitor_html" name="monitor_html" type="checkbox" value="true"><a href ="###">dddd</a></li>
+            <div class="ctrlPanel"><button id="clearAll">清空</button></div>
+            <div>
+                <ul id="urlList">
+                    <li><a href ="###" title="">dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</a><button class="deleteButton" param="">×</button></li>
                 </ul>
             </div>
         </section>
         
     </div>
+    <script type="text/javascript" src="js/livereload-setting.js"></script>
+    <script type="text/javascript" src="js/livereload-option.js"></script>
 </body>
 </html>

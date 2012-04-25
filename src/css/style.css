@@ -2,6 +2,7 @@
 body {
     font: 14px/1.5 '微软雅黑';
     color: #53637D;
+    background-color: #EEE;
 }
 
 .clearfix:after {
@@ -13,13 +14,18 @@ body {
 }
 
 .container {
-    width: 60%;
+    width: 80%;
     margin: auto;
     position: relative;
     top: 40px;
     margin: 0 auto;
     min-width: 720px;
+    max-width: 900px;
     overflow: hidden;
+    padding:30px 0;
+    border:1px solid #AAA;
+    border-radius:5px;
+    background-color:rgba(255,255,255,0.85);
 }
 
 h1 {
@@ -31,7 +37,6 @@ h1 {
     text-indent: 40px;
     text-shadow: white 0 1px 2px;
     -webkit-background-size: 28px 28px;
-    border-bottom: 1px solid #EEE;
 }
 
 h3 {
@@ -45,7 +50,7 @@ h3 {
 section {
     padding: 8px 40px;
     -webkit-box-orient: horizontal;
-    border-bottom: 1px solid #EEE;
+    border-top: 1px solid #DAD4D4;
     margin-top: 17px;
     padding-bottom: 20px;
 }
@@ -100,7 +105,7 @@ button:hover {
 }
 
 .ctrlPanel{
-    right:0px;
+    right:15px;
     top:5px;
     position: absolute;
 }
@@ -110,4 +115,20 @@ a,a:hover{
     color: #53637D;
 }
 
+.deleteButton{
+    min-width:20px;
+    padding:0;
+    margin-left:10px;
+    display: none;
+}
 
+#urlList a{
+    max-width:95%;
+    display: inline-block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+#urlList li:hover .deleteButton{
+    display: inline-block;
+}
