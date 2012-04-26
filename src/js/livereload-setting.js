@@ -28,8 +28,8 @@
             lr_css_transitions: true,
             lr_refresh_rate: 1000,
             lr_enable_scrolly: true,
-            lr_enable_id_tag: true,
-            lr_enable_class_tag: true,
+            lr_enable_tag: true,
+            lr_enable_F9: true,
             lr_live_list: []
         },
         init: function(){

@@ -31,12 +31,21 @@
             var self = this;
 
             var observer = {
-                enableLiveReload: function(tab){
+                injectScript: function(tab){
+                    console.log('injectScript');
                     chrome.tabs.executeScript(tab.id, {
-                        "file": self._res.settingScript
+                        "code": "var _setting = " + JSON.stringify(LiveReloadSetting.getOption()) + ";"
                     });
+                    // chrome.tabs.executeScript(tab.id, {
+                    //     "file": self._res.settingScript
+                    // });
                     chrome.tabs.executeScript(tab.id, {
                         "file": self._res.injectScript
+                    });
+                },
+                enableLiveReload: function(tab){
+                    chrome.extension.sendRequest({
+                        "action": "startLiveReload"
                     });
                     chrome.browserAction.setIcon({
                         tabId: tab.id,
@@ -76,6 +85,7 @@
                 onTabUpdated: function(tabId, changeInfo, tab){
                     // if(changeInfo.status === 'loading' || changeInfo.status === 'complete'){
                     if(changeInfo.status === 'complete'){
+                        observer.injectScript(tab);
                         if(LiveReloadSetting.isUrlLive(tab.url)){
                             observer.enableLiveReload(tab);
                         }else{
