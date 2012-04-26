@@ -34,6 +34,24 @@
                 });
                 return basePathArr.join('/');
             }
+        },
+        trim: function(str){
+            return str.replace(/(^[\\s]*)|([\\s]*$)/g, "");
+        },
+        getElementDescription: function(element){
+            var description = "";
+
+            if (element.hasAttribute("id")) {
+                description += "#" + element.getAttribute("id");
+            }
+
+            if (element.hasAttribute("class")) {
+                var classes = element.getAttribute("class").split(" ");
+
+                for (var i = 0, l = classes.length; i < l; i++) {
+                    description += "." + this.trim(classes[i]);
+                }
+            }
         }
     };
 
@@ -65,10 +83,25 @@
                     if(request.action === 'reload'){
                         self._reload(request.item);
                     }
+                },
+                onMouseOver: function(e){
+                    var elm = e.srcElement;
+                    self._tagEl.innerHTML = Utils.getElementDescription(elm);
+                },
+                onMouseOut: function(e){
+
                 }
             };
 
             chrome.extension.onRequest.addListener(observer.onExtRequest);
+
+            this._tagEl = document.createElement('div');
+            this._tagEl.style = 'position:absolute;display:block;top:0;left:0;';
+            document.body.appendChild(this._tagEl);
+
+
+            document.addEventListener('mouseover', observer.onMouseOver, false);
+            document.addEventListener('mouseout', observer.onMouseOut, false);
         },
 
         _parseLinks: function(){

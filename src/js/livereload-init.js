@@ -53,6 +53,7 @@
                         path: self._res.iconOff
                     });
                     self._tabStatus[tab.id] = false;
+                    LiveReloadSetting.removeLiveList(tab.url);
                     console.log('disable reload tab ' + tab.id);
                 },
                 onBrowserActionClicked: function(tab){
