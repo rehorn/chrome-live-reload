@@ -6,7 +6,13 @@
 
 (function(window, undefined) {
 
-    var LiveReloadSetting = window.LiveReloadSetting;
+    // var LiveReloadSetting = window.LiveReloadSetting;
+    //
+    var LiveReloadSetting = {
+        get: function(key){
+            return _setting[key];
+        }
+    };
 
     var WRAPER_ID = '__live_reload_wraper__';
 
@@ -77,7 +83,7 @@
     var LiveReload = {
         init: function() {
             console.log('injectScript init');
-            this.initWatchList();
+            //this.initWatchList();
             this.initEvents();
             
             if(LiveReloadSetting.get('lr_enable_scrolly')){
@@ -101,26 +107,13 @@
                 onExtRequest: function(request, sender, sendRequest) {
                     if(request.action === 'reload'){
                         self._reload(request.item);
+                    }else if(request.action == 'startLiveReload'){
+                        self.initWatchList();
                     }
-                },
-                onMouseOver: function(e){
-                    var elm = e.srcElement;
-                    self._tagEl.innerHTML = Utils.getElementDescription(elm);
-                },
-                onMouseOut: function(e){
-
                 }
             };
 
             chrome.extension.onRequest.addListener(observer.onExtRequest);
-
-            this._tagEl = document.createElement('div');
-            this._tagEl.style = 'position:absolute;display:block;top:0;left:0;';
-            document.body.appendChild(this._tagEl);
-
-
-            document.addEventListener('mouseover', observer.onMouseOver, false);
-            document.addEventListener('mouseout', observer.onMouseOut, false);
         },
 
         _parseLinks: function(){
@@ -201,3 +194,4 @@
     LiveReload.init();
 
 })(window);
+
