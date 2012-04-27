@@ -91,7 +91,7 @@
                         return false;
                     }
                     
-                    if(changeInfo.status === 'complete' ){
+                    if(changeInfo.status === 'complete'){
                         console.log('complete');
                         observer.injectScript(tab);
                         if(LiveReloadSetting.isUrlLive(tab.url)){

@@ -105,7 +105,7 @@
         initEvents: function() {
             var self = this;
             var observer = {
-                onExtRequest: function(request, sender, sendRequest) {
+                onExtRequest: function(request, sender, sendResponse){
                     console.log('onExtRequest');
                     if(request.action === 'reload'){
                         self._reload(request.item);
