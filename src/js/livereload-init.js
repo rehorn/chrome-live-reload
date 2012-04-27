@@ -80,12 +80,15 @@
                             console.log('tab' + sender.tab.id + ' have changed');
                         });
                         sendResponse('livereload initWatchList ok');
+                    }else if(request.action && request.action === 'getSetting'){
+                        sendResponse(LiveReloadSetting.getOption());
                     }
                 },
                 onTabUpdated: function(tabId, changeInfo, tab){
                     // if(changeInfo.status === 'loading' || changeInfo.status === 'complete'){
+                    console.log(changeInfo);
                     if(changeInfo.status === 'complete'){
-                        observer.injectScript(tab);
+                        //observer.injectScript(tab);
                         if(LiveReloadSetting.isUrlLive(tab.url)){
                             observer.enableLiveReload(tab);
                         }else{

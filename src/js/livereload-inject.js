@@ -7,7 +7,8 @@
 (function(window, undefined) {
 
     // var LiveReloadSetting = window.LiveReloadSetting;
-    //
+    
+    var _setting;
     var LiveReloadSetting = {
         get: function(key){
             return _setting[key];
@@ -83,11 +84,27 @@
     var LiveReload = {
         init: function() {
             console.log('injectScript init');
-            //this.initWatchList();
+            this.requestSettings();
+        },
+
+        requestSettings: function(){
+            chrome.extension.sendRequest({
+                "action": "getSetting"
+            }, function(response) {
+                _setting = response;
+                console.log(_setting);
+                console.log('getsetting success');
+            });
+        },
+
+        requestSettingSuccess: function(){
             this.initEvents();
             
             if(LiveReloadSetting.get('lr_enable_scrolly')){
                 this._adjustScroll();
+            }
+            if(LiveReloadSetting.get('lr_enable_id_tag')){
+                this._showNodeWrapper();
             }
         },
 
@@ -163,6 +180,13 @@
             if (document.documentElement.scrollTop != null) document.documentElement.scrollTop = y;
             if (window.pageYOffset != null) window.pageYOffset = y;
             if (document.body.scrollTop != null) document.body.scrollTop = y;
+        },
+
+        _showNodeWrapper: function(){
+            var wraper = this.wraper = document.createElement('div');
+            wraper.id = WRAPER_ID;
+            document.body.appendChild(wraper);
+            wraper.hide();
         },
 
         _reload: function(item){
