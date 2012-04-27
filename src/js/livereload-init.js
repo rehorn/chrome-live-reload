@@ -34,14 +34,14 @@
             var observer = {
                 injectScript: function(tab){
                     console.log('injectScript');
-                    chrome.tabs.insertCSS(tab.id, {
-                        "file": self._res.injectCss
-                    });
                     chrome.tabs.executeScript(tab.id, {
                         "code": "var _setting = " + JSON.stringify(LiveReloadSetting.getOption()) + ";"
                     });
                     chrome.tabs.executeScript(tab.id, {
                         "file": self._res.injectScript
+                    });
+                    chrome.tabs.insertCSS(tab.id, {
+                        "file": self._res.injectCss
                     });
                 },
                 enableLiveReload: function(tab){

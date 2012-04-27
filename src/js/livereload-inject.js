@@ -10,7 +10,7 @@
     
     var LiveReloadSetting = {
         get: function(key){
-            return _setting[key];
+            //return _setting[key];
         }
     };
 
@@ -66,7 +66,7 @@
     var Dom = {
         css: function(elm, style){
             for(var i in style){
-                el.style[i] = style[i];
+                elm.style[i] = style[i];
             }
         },
         show: function(elm){
@@ -87,7 +87,7 @@
             if(LiveReloadSetting.get('lr_enable_scrolly')){
                 this._adjustScroll();
             }
-            if(LiveReloadSetting.get('lr_enable_id_tag')){
+            if(LiveReloadSetting.get('lr_enable_tag')){
                 this._showNodeWrapper();
             }
         },
