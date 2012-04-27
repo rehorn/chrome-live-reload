@@ -1,12 +1,6 @@
 {
    "background_page": "background.html",
    "options_page": "options.html",
-   "content_scripts": [{
-        "matches": ["http://*/*", "https://*/*"],
-        "js": ["js/livereload-inject.js"],
-        "css": ["css/inject.css"],
-        "all_frames": true
-    }],
    "browser_action": {
       "default_icon": "images/livereload-off-19.png",
       "default_title": "on/off live reload"
@@ -18,6 +12,6 @@
       "48": "images/livereload-48.png"
    },
    "name": "live reload",
-   "permissions": [ "tabs", "\u003Call_urls\u003E" ],
-   "version": "0.1.1"
+   "permissions": ["tabs", "\u003Call_urls\u003E" ],
+   "version": "0.2.1"
 }

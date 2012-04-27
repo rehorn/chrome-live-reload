@@ -17,7 +17,8 @@
             iconOn: 'images/livereload-19.png',
             iconOff: 'images/livereload-off-19.png',
             settingScript: 'js/livereload-setting.js',
-            injectScript: 'js/livereload-inject.js'
+            injectScript: 'js/livereload-inject.js',
+            injectCss: 'css/inject.css'
         },
 
         // 扩展初始化入口
@@ -33,12 +34,12 @@
             var observer = {
                 injectScript: function(tab){
                     console.log('injectScript');
+                    chrome.tabs.insertCSS(tab.id, {
+                        "file": self._res.injectCss
+                    });
                     chrome.tabs.executeScript(tab.id, {
                         "code": "var _setting = " + JSON.stringify(LiveReloadSetting.getOption()) + ";"
                     });
-                    // chrome.tabs.executeScript(tab.id, {
-                    //     "file": self._res.settingScript
-                    // });
                     chrome.tabs.executeScript(tab.id, {
                         "file": self._res.injectScript
                     });
@@ -73,22 +74,26 @@
                     }
                 },
                 onExtRequest: function(request, sender, sendResponse){
-                    console.log('Request initWatchList');
                     if(request.action && request.action === 'initWatchList'){
+                        console.log('Request initWatchList');
                         LiveReloadWatcher.add(sender.tab.id, request.data, function(item){
                             self.fireRload(sender.tab.id, item);
                             console.log('tab' + sender.tab.id + ' have changed');
                         });
                         sendResponse('livereload initWatchList ok');
-                    }else if(request.action && request.action === 'getSetting'){
-                        sendResponse(LiveReloadSetting.getOption());
                     }
                 },
                 onTabUpdated: function(tabId, changeInfo, tab){
-                    // if(changeInfo.status === 'loading' || changeInfo.status === 'complete'){
-                    console.log(changeInfo);
-                    if(changeInfo.status === 'complete'){
-                        //observer.injectScript(tab);
+                    if(tab.url.indexOf('chrome://') != -1 || 
+                        tab.url.indexOf('chrome-devtools://') != -1  || 
+                        tab.url.indexOf('chrome-extension://') != -1  || 
+                        tab.url.indexOf('view-source:') != -1){
+                        return false;
+                    }
+                    
+                    if(changeInfo.status === 'complete' ){
+                        console.log('complete');
+                        observer.injectScript(tab);
                         if(LiveReloadSetting.isUrlLive(tab.url)){
                             observer.enableLiveReload(tab);
                         }else{

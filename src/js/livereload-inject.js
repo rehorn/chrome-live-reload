@@ -8,7 +8,6 @@
 
     // var LiveReloadSetting = window.LiveReloadSetting;
     
-    var _setting;
     var LiveReloadSetting = {
         get: function(key){
             return _setting[key];
@@ -83,23 +82,8 @@
 
     var LiveReload = {
         init: function() {
-            console.log('injectScript init');
-            this.requestSettings();
-        },
-
-        requestSettings: function(){
-            chrome.extension.sendRequest({
-                "action": "getSetting"
-            }, function(response) {
-                _setting = response;
-                console.log(_setting);
-                console.log('getsetting success');
-            });
-        },
-
-        requestSettingSuccess: function(){
+            console.log('injectScript startLiveReload init');
             this.initEvents();
-            
             if(LiveReloadSetting.get('lr_enable_scrolly')){
                 this._adjustScroll();
             }
@@ -122,10 +106,13 @@
             var self = this;
             var observer = {
                 onExtRequest: function(request, sender, sendRequest) {
+                    console.log('onExtRequest');
                     if(request.action === 'reload'){
                         self._reload(request.item);
-                    }else if(request.action == 'startLiveReload'){
+                        console.log('reload');
+                    }else if(request.action === 'startLiveReload'){
                         self.initWatchList();
+                        console.log('initWatchList');
                     }
                 }
             };
