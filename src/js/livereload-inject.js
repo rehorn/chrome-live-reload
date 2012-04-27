@@ -8,6 +8,8 @@
 
     var LiveReloadSetting = window.LiveReloadSetting;
 
+    var WRAPER_ID = '__live_reload_wraper__';
+
     var Utils = {
         toArr: function(arrLike){
             return Array.prototype.slice.call(arrLike);
@@ -52,6 +54,23 @@
                     description += "." + this.trim(classes[i]);
                 }
             }
+        }
+    };
+
+    var Dom = {
+        css: function(elm, style){
+            for(var i in style){
+                el.style[i] = style[i];
+            }
+        },
+        show: function(elm){
+            elm.css({display:'block'});
+        },
+        hide: function(elm){
+            elm.css({display:'none'});
+        },
+        isShow: function(elm){
+            return elm.style.display !== 'none';
         }
     };
 
@@ -140,7 +159,7 @@
             return result;
         },
 
-        _adjustScroll: function ( ) {
+        _adjustScroll: function(){
             var key = '__LiveRloadScrollY';
             var reg = new RegExp("(^| )" + key + "=([^;]*)(;|\x24)"),
                 result = reg.exec(document.cookie);
