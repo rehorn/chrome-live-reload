@@ -45,7 +45,7 @@
                     });
                 },
                 enableLiveReload: function(tab){
-                    chrome.extension.sendRequest({
+                    chrome.tabs.sendRequest(tab.id, {
                         "action": "startLiveReload"
                     });
                     chrome.browserAction.setIcon({

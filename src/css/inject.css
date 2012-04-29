@@ -1,3 +1,43 @@
-.test{
-    
+#__live_reload_wraper__{
+    box-sizing: border-box; 
+    pointer-events: none; 
+    position: absolute; 
+    display: none; 
+    border: red dotted 2px; 
+    color: red; 
+    z-index: 2147483647; 
+    position: reload;
+}
+
+#__live_reload_wraper__ .wraper-tag{
+    color: #000;
+    display: inline;
+    font-family: sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 11px;
+    opacity: 1;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    position: absolute;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffca), to(#ffec96));
+    border: 1px solid #ffdb63;
+    margin: 1px;
+    padding: 1px;
+    z-index: 2147483647;
+}
+
+#__live_reload_wraper__ .id-class-tag{
+    top:1px;
+    left:1px;
+}
+
+#__live_reload_wraper__ .esc-tips{
+    right:1px;
+    top:1px;
 }
