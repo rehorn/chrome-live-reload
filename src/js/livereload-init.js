@@ -27,6 +27,16 @@
             this.initEvents();
         },
 
+        //获得去掉hashtag后的url，以支持多hashtag页面自动刷新 by liangvls@gmail.com 2012-06-10
+        getRealUrl: function(url){
+            var pos = url.indexOf('#');
+            if(pos != -1) {
+                url = url.substring(0, pos);
+                console.log(url);
+            }
+            return url;
+        },
+
         initEvents: function(){
             console.log('LiveRload initEvents');
             var self = this;
@@ -44,6 +54,7 @@
                         "file": self._res.injectCss
                     });
                 },
+                
                 enableLiveReload: function(tab){
                     chrome.tabs.sendRequest(tab.id, {
                         "action": "startLiveReload"
@@ -53,7 +64,8 @@
                         path: self._res.iconOn
                     });
                     self._tabStatus[tab.id] = true;
-                    LiveReloadSetting.addLiveList(tab.url);
+                    var _url = self.getRealUrl(tab.url);
+                    LiveReloadSetting.addLiveList(_url);
                     console.log('enable reload tab ' + tab.id);
                 },
                 disableLiveReload: function(tab){
@@ -63,7 +75,8 @@
                         path: self._res.iconOff
                     });
                     self._tabStatus[tab.id] = false;
-                    LiveReloadSetting.removeLiveList(tab.url);
+                    var _url = self.getRealUrl(tab.url);
+                    LiveReloadSetting.removeLiveList(_url);
                     console.log('disable reload tab ' + tab.id);
                 },
                 onBrowserActionClicked: function(tab){
@@ -84,17 +97,18 @@
                     }
                 },
                 onTabUpdated: function(tabId, changeInfo, tab){
-                    if(tab.url.indexOf('chrome://') != -1 || 
-                        tab.url.indexOf('chrome-devtools://') != -1  || 
-                        tab.url.indexOf('chrome-extension://') != -1  || 
-                        tab.url.indexOf('view-source:') != -1){
+                    var _url = self.getRealUrl(tab.url);
+                    if(_url.indexOf('chrome://') != -1 || 
+                        _url.indexOf('chrome-devtools://') != -1  || 
+                        _url.indexOf('chrome-extension://') != -1  || 
+                        _url.indexOf('view-source:') != -1){
                         return false;
                     }
                     
                     if(changeInfo.status === 'complete'){
                         console.log('complete');
                         observer.injectScript(tab);
-                        if(LiveReloadSetting.isUrlLive(tab.url)){
+                        if(LiveReloadSetting.isUrlLive(_url)){
                             observer.enableLiveReload(tab);
                         }else{
                             observer.disableLiveReload(tab);
